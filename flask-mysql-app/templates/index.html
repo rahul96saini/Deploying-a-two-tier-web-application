@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rahul's Message Board</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(160deg, #0C0D16, #1A1C2B);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1100px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            padding: 30px;
+        }
+
+        /* LEFT SIDE PROFILE */
+        .profile {
+            flex: 0.4;
+            padding-right: 30px;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .profile h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #5599FF;
+            margin-bottom: 8px;
+        }
+
+        .profile h2 {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .profile p {
+            font-size: 0.95rem;
+            color: #ddd;
+            line-height: 1.5;
+        }
+
+        /* RIGHT SIDE MESSAGES */
+        .messages-area {
+            flex: 0.6;
+            padding-left: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h3 {
+            text-align: left;
+            margin-bottom: 12px;
+            color: #5599FF;
+            font-size: 1.4rem;
+        }
+
+        .messages {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            border: 1px solid rgba(85, 153, 255, 0.3);
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .messages p {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(85, 153, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            margin-bottom: 12px;
+            font-size: 16px;
+            transition: 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #5599FF;
+            box-shadow: 0 0 10px rgba(85, 153, 255, 0.6);
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background: #5599FF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background: #417ad6;
+            box-shadow: 0 0 12px rgba(85, 153, 255, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 850px) {
+            .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile {
+                border: none;
+                padding-right: 0;
+                padding-bottom: 20px;
+            }
+            .messages-area {
+                padding-left: 0;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- LEFT SIDE: PROFILE -->
+        <div class="profile">
+            <h1>Rahul Saini</h1>
+            <h2>DevOps Enthusiast</h2>
+            <p>
+                I am currently working as a Monitoring Engineer.
+                I have hands-on experience with AWS, Terraform, Docker, Kubernetes,
+                Linux, Networking, and Bash scripting.
+            </p>
+        </div>
+
+        <!-- RIGHT SIDE: MESSAGES -->
+        <div class="messages-area">
+            <h3>Messages</h3>
+
+            <div class="messages">
+                {% for message in messages %}
+                    <p>{{ message[0] }}</p>
+                {% endfor %}
+            </div>
+
+            <form id="messageForm">
+                <input type="text" name="new_message" placeholder="Type your message..." required>
+                <input type="submit" value="Send">
+            </form>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#messageForm").on("submit", function (event) {
+                event.preventDefault();
+
+                let input = $("input[name='new_message']");
+                let msg = input.val().trim();
+
+                if (msg === "") return;
+
+                $.ajax({
+                    url: "/submit",
+                    type: "POST",
+                    data: { new_message: msg },
+                    success: function (response) {
+                        if (response && response.message) {
+                            $(".messages").append("<p>" + response.message + "</p>");
+                            input.val("");
+                        }
+                    },
+                    error: function () {
+                        alert("Error sending message!");
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
