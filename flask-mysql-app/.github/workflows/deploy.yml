@@ -1,0 +1,25 @@
+name: Deploy Flask + MySQL App
+
+on:
+  push:
+    branches:
+      - main    # Trigger workflow only when code is pushed to main branch
+
+jobs:
+  deploy:
+    runs-on: self-hosted    # Use your EC2 self-hosted GitHub Actions runner
+
+    steps:
+      - name: Checkout repository   # Pull latest code from GitHub repo into runner
+        uses: actions/checkout@v3   
+
+      - name: Stop existing containers    # Stop old containers; ignore error if none exist
+        run: |
+          docker compose down || true 
+
+      - name: Build and start containers  # Build fresh images and start containers in detached mode
+        run: |
+          docker compose up -d --build
+
+      - name: Show running containers   # Show active containers
+        run: docker ps
