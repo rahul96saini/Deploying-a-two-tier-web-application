@@ -7,7 +7,10 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted    # Use your EC2 self-hosted GitHub Actions runner
+    runs-on:  # Use your EC2 self-hosted GitHub Actions runner
+      - self-hosted
+      - linux
+      - x64
 
     steps:
       - name: Checkout repository   # Pull latest code from GitHub repo into runner
