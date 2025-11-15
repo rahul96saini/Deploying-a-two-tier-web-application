@@ -18,11 +18,13 @@ jobs:
 
       - name: Stop existing containers    # Stop old containers; ignore error if none exist
         run: |
-          docker compose down || true 
+          docker compose down || true
+        working-directory: ./flask-mysql-app
 
       - name: Build and start containers  # Build fresh images and start containers in detached mode
         run: |
           docker compose up -d --build
+        working-directory: ./flask-mysql-app
 
       - name: Show running containers   # Show active containers
         run: docker ps
