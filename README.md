@@ -31,14 +31,16 @@
 9. [Infrastructure Diagram](#Infrastructure-Diagram)
 
 10. [Workflow Diagram](#Workflow-Diagram)
+
 # 1. Project Overview
 
 This project shows how to set up a complete CI/CD pipeline to deploy a Flask + MySQL application on an AWS EC2 server using Docker and Docker Compose. The entire app runs in containers, and Docker Compose manages both the Flask and MySQL services together. The EC2 server is configured as a self-hosted GitHub Actions runner, which means GitHub can directly run deployment steps on it. 
 
 Whenever developer push new code to the main branch, GitHub Actions automatically pulls the updated code, builds new Docker images, and redeploys the containers. This creates a fully automated and real-world DevOps workflow where updates are deployed quickly, consistently, and without manual steps.
+
 # 2. Architecture Diagram
 
-![Architecture Diagram](./images/ArchitectureDiagram.png)
+![](./images/Architecture.png)
 
 # 3. Step 1 :  Configure AWS EC2 Instance
 1. Launch EC2 Instance:
@@ -297,4 +299,4 @@ After deployment, the application becomes accessible through the EC2 instance's 
 # Infrastructure Diagram
 
 
-![](./images/InfrastructureDiagram.png)
+![](./images/Infrastructure.png)
