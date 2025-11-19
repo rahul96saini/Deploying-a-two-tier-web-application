@@ -1,4 +1,3 @@
-#
 # Devops Project: Automated CI/CD pipeline with github actions for a 2-Tier flask application on AWS
 # Author
 
@@ -39,7 +38,7 @@ This project shows how to set up a complete CI/CD pipeline to deploy a Flask + M
 Whenever developer push new code to the main branch, GitHub Actions automatically pulls the updated code, builds new Docker images, and redeploys the containers. This creates a fully automated and real-world DevOps workflow where updates are deployed quickly, consistently, and without manual steps.
 # 2. Architecture Diagram
 
-![Architecture Diagram](./images/Architecture Diagram.png)
+![Architecture Diagram](./images/ArchitectureDiagram.png)
 
 # 3. Step 1 :  Configure AWS EC2 Instance
 1. Launch EC2 Instance:
@@ -126,14 +125,14 @@ Execute the commands provided by GitHub on the EC2 instance.
 
 Run the configuration script to connect the EC2 instance with your GitHub repository:
 
-`./config.sh --url https://github.com/rahul96saini/Deploying-a-two-tier-web-application --token BDVFOHHVAX4UI2WFYH33SNLJDV7SM`
+`./config.sh --url https://github.com/rahul96saini/Deploying-a-two-tier-web-application --token for the runner`
 
 4. Start the Runner
 Once the configuration completes, start the runner service:
 
 `./run.sh`
 
-![](./images/app5.jpg)
+![](./images/app5.png)
 
 The terminal must remain open while the runner is active.
 
@@ -298,4 +297,4 @@ After deployment, the application becomes accessible through the EC2 instance's 
 # Infrastructure Diagram
 
 
-![](./images/Infrastructure Diagram.png)
+![](./images/InfrastructureDiagram.png)
